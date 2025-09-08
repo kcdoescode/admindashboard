@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>AI E-commerce</h2>
+    <ul>
+      <li><a href="#" class="active" data-target="dashboardSection">📊 Dashboard</a></li>
+      <li><a href="#" data-target="ordersSection">📦 Orders</a></li>
+      <li><a href="#" data-target="productsSection">🛒 Products</a></li>
+      <li><a href="#" data-target="customersSection">👥 Customers</a></li>
+      <li><a href="#" data-target="settingsSection">⚙️ Settings</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <header>
+      <input type="text" placeholder="Search...">
+
+      <!-- Welcome + Logout -->
+      <div class="user">
+        <span id="welcomeMsg">Welcome</span> ⬇️
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <!-- ===== Dashboard Section ===== -->
+    <section id="dashboardSection" class="content-section active">
+      <section class="cards">
+        <div class="card" id="totalSales">Total Sales</div>
+        <div class="card" id="activeProducts">Active Products</div>
+        <div class="card" id="revenue">Revenue</div>
+      </section>
+
+      <section class="overview">
+        <canvas id="salesChart"></canvas>
+      </section>
+    </section>
+
+    <!-- ===== Orders Section ===== -->
+    <section id="ordersSection" class="content-section">
+      <h2>Recent Orders</h2>
+      <div class="table-container">
+        <table id="ordersTable">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Products Section ===== -->
+    <section id="productsSection" class="content-section">
+      <h2>Products</h2>
+
+      <!-- Add Product Form -->
+      <div class="form-container">
+        <h3>Add New Product</h3>
+        <form id="productForm">
+          <input type="text" id="pName" placeholder="Product Name" required>
+          <input type="text" id="pCategory" placeholder="Category" required>
+          <input type="number" id="pPrice" placeholder="Price" required>
+          <input type="number" id="pStock" placeholder="Stock" required>
+          <button type="submit">➕ Add Product</button>
+        </form>
+      </div>
+
+      <!-- Product Table -->
+      <div class="table-container">
+        <h3>Product List</h3>
+        <table id="productsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>In Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Customers Section ===== -->
+    <section id="customersSection" class="content-section">
+      <h2>Customers</h2>
+      <p>Customer data will go here...</p>
+    </section>
+
+    <!-- ===== Settings Section ===== -->
+    <section id="settingsSection" class="content-section">
+      <h2>Settings</h2>
+      <p>Settings options will go here...</p>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

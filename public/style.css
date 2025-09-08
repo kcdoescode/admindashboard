@@ -1,0 +1,182 @@
+/* =============================
+   Global Styles - Resume Worthy UI
+   ============================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+/* Shared form container styling */
+.auth-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.auth-container h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #222;
+}
+
+/* Input fields */
+.auth-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.auth-container input:focus {
+  border-color: #2575fc;
+}
+
+/* Buttons */
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  background: #2575fc;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.3s;
+}
+
+.auth-container button:hover {
+  background: #6a11cb;
+}
+
+/* Links */
+.auth-container p {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.auth-container a {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Product Table Styling */
+.table-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-top: 20px;
+}
+
+#productsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#productsTable thead {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #fff;
+  font-weight: 600;
+}
+
+#productsTable th,
+#productsTable td {
+  padding: 12px 14px;
+  text-align: left;
+}
+
+#productsTable tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+#productsTable tbody tr:hover {
+  background-color: #eef2ff;
+  transition: 0.2s;
+}
+
+/* Buttons inside table */
+#productsTable button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 4px;
+  font-size: 13px;
+  transition: 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#productsTable button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.edit-btn {
+  background-color: #facc15; /* yellow */
+  color: #000;
+}
+
+.delete-btn {
+  background-color: #ef4444; /* red */
+  color: #fff;
+}
+/* Logout Button */
+#logoutBtn {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 15px;
+  transition: 0.2s;
+}
+
+#logoutBtn:hover {
+  background: linear-gradient(90deg, #dc2626, #b91c1c);
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(239,68,68,0.4);
+}

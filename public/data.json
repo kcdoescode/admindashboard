@@ -1,0 +1,22 @@
+{
+  "stats": {
+    "totalSales": 123456,
+    "activeProducts": 340,
+    "revenue": 12345
+  },
+  "salesOverview": {
+    "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    "values": [5, 10, 25, 15, 20, 18, 22, 30]
+  },
+  "products": [
+    { "name": "Laptop", "category": "Electronics", "price": 50, "stock": 12 },
+    { "name": "Shoes", "category": "Fashion", "price": 20, "stock": 30 },
+    { "name": "Headphones", "category": "Electronics", "price": 80, "stock": 15 },
+    { "name": "Watch", "category": "Accessories", "price": 120, "stock": 5 },
+    { "name": "T-Shirt", "category": "Apparel", "price": 18, "stock": 50 }
+  ],
+  "orders": [
+    { "id": 1001, "customer": "Jane Smith", "date": "01/03/2024", "status": "Completed", "total": 250 },
+    { "id": 1002, "customer": "Mark Lee", "date": "02/04/2024", "status": "Pending", "total": 120 }
+  ]
+}
