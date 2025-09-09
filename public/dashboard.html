@@ -25,9 +25,9 @@
     <header>
       <input type="text" placeholder="Search...">
 
-      <!-- Welcome + Logout -->
-      <div class="user">
-        <span id="welcomeMsg">Welcome</span> ⬇️
+      <!-- User Info + Logout -->
+      <div class="user-info">
+        <span id="welcomeMsg">Welcome, User</span>
         <button id="logoutBtn">Logout</button>
       </div>
     </header>
@@ -35,14 +35,37 @@
     <!-- ===== Dashboard Section ===== -->
     <section id="dashboardSection" class="content-section active">
       <section class="cards">
-        <div class="card" id="totalSales">Total Sales</div>
-        <div class="card" id="activeProducts">Active Products</div>
-        <div class="card" id="revenue">Revenue</div>
+        <div class="card">
+          <h3>Total Sales</h3>
+          <p id="totalSales">$0</p>
+        </div>
+        <div class="card">
+          <h3>Active Products</h3>
+          <p id="activeProducts">0</p>
+        </div>
+        <div class="card">
+          <h3>Revenue</h3>
+          <p id="revenue">$0</p>
+        </div>
       </section>
 
-      <section class="overview">
-        <canvas id="salesChart"></canvas>
-      </section>
+      <!-- Charts Container -->
+      <div class="charts-container">
+        <div class="chart-box">
+          <h3>Sales Overview</h3>
+          <canvas id="salesChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <h3>Average Price per Category</h3>
+          <canvas id="priceChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <h3>Stock Distribution</h3>
+          <canvas id="stockChart"></canvas>
+        </div>
+      </div>
     </section>
 
     <!-- ===== Orders Section ===== -->

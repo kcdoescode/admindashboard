@@ -20,8 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-let currentData = null; // local state for CRUD
-let salesChart = null;  // store chart instance
+let currentData = null; 
+let salesChart = null;
+let priceChart = null;
+let stockChart = null;
 
 // === Load Data (per user) ===
 function loadData() {
@@ -32,19 +34,18 @@ function loadData() {
     currentData = JSON.parse(savedData);
     renderDashboard();
   } else {
-    // First time for this user: fetch template data.json
     fetch("data.json")
       .then(res => res.json())
       .then(data => {
         currentData = data;
-        saveData(); // store under this user's key
+        saveData();
         renderDashboard();
       })
       .catch(err => console.error("Error loading data:", err));
   }
 }
 
-// === Save Data to LocalStorage (per user) ===
+// === Save Data ===
 function saveData() {
   const key = `dashboardData_${loggedInUser.email}`;
   localStorage.setItem(key, JSON.stringify(currentData));
@@ -56,23 +57,23 @@ function renderDashboard() {
 
   // --- Update Cards ---
   document.getElementById("totalSales").innerHTML = `
-    <h3>Total Sales</h3>
+    
     <p>$${currentData.stats.totalSales}</p>
   `;
 
   document.getElementById("activeProducts").innerHTML = `
-    <h3>Active Products</h3>
+    
     <p>${currentData.stats.activeProducts}</p>
   `;
 
   document.getElementById("revenue").innerHTML = `
-    <h3>Revenue</h3>
+    
     <p>$${currentData.stats.revenue}</p>
   `;
 
-  // --- Render Chart ---
+  // --- Sales Chart ---
   const ctx = document.getElementById("salesChart").getContext("2d");
-  if (salesChart) salesChart.destroy(); // prevent duplicate charts
+  if (salesChart) salesChart.destroy();
   salesChart = new Chart(ctx, {
     type: "line",
     data: {
@@ -86,6 +87,9 @@ function renderDashboard() {
       }]
     }
   });
+
+  // --- Price & Stock Charts ---
+  renderProductCharts();
 
   // --- Products Table ---
   const productsTable = document.querySelector("#productsTable tbody");
@@ -109,7 +113,7 @@ function renderDashboard() {
   const ordersTable = document.querySelector("#ordersTable tbody");
   ordersTable.innerHTML = "";
   currentData.orders.forEach(o => {
-    ordersTable.innerHTML += `
+    ordersTable.innerHTML = `
       <tr>
         <td>#${o.id}</td>
         <td>${o.customer}</td>
@@ -117,7 +121,54 @@ function renderDashboard() {
         <td><span class="status ${o.status.toLowerCase()}">${o.status}</span></td>
         <td>$${o.total}</td>
       </tr>
-    `;
+    ` + ordersTable.innerHTML;
+  });
+}
+
+// === Render Product Charts (Price & Stock) ===
+function renderProductCharts() {
+  const categories = {};
+  currentData.products.forEach(p => {
+    if (!categories[p.category]) {
+      categories[p.category] = { totalPrice: 0, count: 0, totalStock: 0 };
+    }
+    categories[p.category].totalPrice += parseFloat(p.price);
+    categories[p.category].count++;
+    categories[p.category].totalStock += parseInt(p.stock);
+  });
+
+  const labels = Object.keys(categories);
+  const avgPrices = labels.map(cat => (categories[cat].totalPrice / categories[cat].count).toFixed(2));
+  const stocks = labels.map(cat => categories[cat].totalStock);
+
+  // Price Chart
+  const ctxPrice = document.getElementById("priceChart").getContext("2d");
+  if (priceChart) priceChart.destroy();
+  priceChart = new Chart(ctxPrice, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Average Price ($)",
+        data: avgPrices,
+        backgroundColor: "rgba(34,197,94,0.6)"
+      }]
+    }
+  });
+
+  // Stock Chart
+  const ctxStock = document.getElementById("stockChart").getContext("2d");
+  if (stockChart) stockChart.destroy();
+  stockChart = new Chart(ctxStock, {
+    type: "pie",
+    data: {
+      labels,
+      datasets: [{
+        label: "Stock Count",
+        data: stocks,
+        backgroundColor: ["#3b82f6", "#f59e0b", "#ef4444", "#10b981", "#8b5cf6"]
+      }]
+    }
   });
 }
 
@@ -132,7 +183,7 @@ function editProduct(index) {
     currentData.products[index].stock = newStock;
     saveData();
     alert(`✅ Product ${p.name} updated!`);
-    renderDashboard();
+    renderDashboard(); // 🔥 Charts auto-refresh
   }
 }
 
@@ -143,7 +194,7 @@ function deleteProduct(index) {
     currentData.products.splice(index, 1);
     saveData();
     alert(`${p.name} deleted successfully!`);
-    renderDashboard();
+    renderDashboard(); // 🔥 Charts auto-refresh
   }
 }
 
@@ -161,7 +212,7 @@ document.getElementById("productForm").addEventListener("submit", (e) => {
   currentData.products.push(product);
   saveData();
   alert(`🎉 Product Added: ${product.name}`);
-  renderDashboard();
+  renderDashboard(); // 🔥 Charts auto-refresh
 
   e.target.reset();
 });
@@ -180,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // === Start ===
 loadData();
+
 // =============================
 // Section Navigation Handling
 // =============================
@@ -191,15 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // remove active from all links
       links.forEach(l => l.classList.remove("active"));
-      // add active to clicked link
       link.classList.add("active");
 
-      // hide all sections
       sections.forEach(sec => sec.classList.remove("active"));
 
-      // show target section
       const target = link.getAttribute("data-target");
       document.getElementById(target).classList.add("active");
     });
